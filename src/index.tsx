@@ -87,6 +87,26 @@ export class CircularSlider extends React.Component<Props> {
     }
   };
 
+  onTouchStart = (ev: React.TouchEvent<SVGSVGElement>) => {
+    const svgRef = this.svgRef.current;
+    if (svgRef) {
+      svgRef.addEventListener("touchmove", this.processSelectionTouch);
+      svgRef.addEventListener("touchend", this.removeTouchListeners);
+    }
+    this.processSelectionTouch(ev);
+  };
+
+  removeTouchListeners = () => {
+    const svgRef = this.svgRef.current;
+    if (svgRef) {
+      svgRef.removeEventListener("touchmove", this.processSelectionTouch);
+      svgRef.removeEventListener("touchend", this.removeTouchListeners);
+    }
+    if (this.props.onControlFinished) {
+      this.props.onControlFinished();
+    }
+  };
+
   processSelection = (ev: React.MouseEvent<SVGSVGElement> | MouseEvent) => {
     const {
       size,
@@ -112,6 +132,65 @@ export class CircularSlider extends React.Component<Props> {
     const svgPoint = svgRef.createSVGPoint();
     const x = ev.clientX;
     const y = ev.clientY;
+    svgPoint.x = x;
+    svgPoint.y = y;
+    const coordsInSvg = svgPoint.matrixTransform(
+      svgRef.getScreenCTM()!.inverse()
+    );
+
+    const angle = positionToAngle(coordsInSvg, size, angleType);
+    let value = angleToValue({
+      angle,
+      minValue,
+      maxValue,
+      startAngle,
+      endAngle
+    });
+    if (coerceToInt) {
+      value = Math.round(value);
+    }
+
+    if (!disabled) {
+      if (
+        handle2 &&
+        handle2.onChange &&
+        // make sure we're closer to handle 2 -- i.e. controlling handle2
+        Math.abs(value - handle2.value) < Math.abs(value - handle1.value)
+      ) {
+        handle2.onChange(value);
+      } else {
+        handle1.onChange(value);
+      }
+    }
+  };
+
+  processSelectionTouch = (
+    ev: React.TouchEvent<SVGSVGElement> | TouchEvent
+  ) => {
+    const {
+      size,
+      maxValue,
+      minValue,
+      angleType,
+      startAngle,
+      endAngle,
+      handle1,
+      disabled,
+      handle2,
+      coerceToInt
+    } = this.props;
+    if (!handle1.onChange) {
+      // Read-only, don't bother doing calculations
+      return;
+    }
+    const svgRef = this.svgRef.current;
+    if (!svgRef) {
+      return;
+    }
+    // Find the coordinates with respect to the SVG
+    const svgPoint = svgRef.createSVGPoint();
+    const x = ev.touches[0].clientX;
+    const y = ev.touches[0].clientY;
     svgPoint.x = x;
     svgPoint.y = y;
     const coordsInSvg = svgPoint.matrixTransform(
@@ -196,11 +275,17 @@ export class CircularSlider extends React.Component<Props> {
 
     return (
       <svg
+        style={{
+          touchAction: "none", // this disables scroll while touching
+          WebkitTouchCallout: "none", // this disables long press actions
+          WebkitUserSelect: "none" // this disables long press actions
+        }}
         width={size}
         height={size}
         ref={this.svgRef}
         onMouseDown={this.onMouseDown}
         onMouseEnter={this.onMouseEnter}
+        onTouchStart={this.onTouchStart}
         onClick={
           /* TODO: be smarter about this -- for example, we could run this through our
           calculation and determine how close we are to the arc, and use that to decide
