@@ -44,11 +44,22 @@ const HeadlineExample: React.FunctionComponent = () => {
     const [value1, setValue1] = useState(20);
     const [value2, setValue2] = useState(60);
 
+    const handleSetValue1 = (
+        value: number, ev: React.TouchEvent<SVGSVGElement>
+          | TouchEvent
+          | React.MouseEvent<SVGSVGElement>
+          | MouseEvent
+      ) => {
+      ev.preventDefault()
+      ev.stopPropagation()
+      setValue1(value)
+    }
+
     return (
       <CircularSlider
         handle1={{
           value: value1,
-          onChange: v => setValue1(v)
+          onChange: handleSetValue1
         }}
         handle2={{
           value: value2,
@@ -73,11 +84,22 @@ const MyApp = () => {
   const [value1, setValue1] = useState(20);
   const [value2, setValue2] = useState(60);
 
+  const handleSetValue1 = (
+      value: number, ev: React.TouchEvent<SVGSVGElement>
+        | TouchEvent
+        | React.MouseEvent<SVGSVGElement>
+        | MouseEvent
+    ) => {
+    ev.preventDefault()
+    ev.stopPropagation()
+    setValue1(value)
+  }
+
   return (
     <CircularSlider
       handle1={{
         value: value1,
-        onChange: v => setValue1(v)
+        onChange: handleSetValue1
       }}
       handle2={{
         value: value2,
