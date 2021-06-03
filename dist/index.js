@@ -87,10 +87,10 @@ class CircularSlider extends React.Component {
                 if (handle2 &&
                     handle2.onChange &&
                     Math.abs(value - handle2.value) < Math.abs(value - handle1.value)) {
-                    handle2.onChange(value);
+                    handle2.onChange(value, ev);
                 }
                 else {
-                    handle1.onChange(value);
+                    handle1.onChange(value, ev);
                 }
             }
         };
@@ -124,17 +124,16 @@ class CircularSlider extends React.Component {
                 if (handle2 &&
                     handle2.onChange &&
                     Math.abs(value - handle2.value) < Math.abs(value - handle1.value)) {
-                    handle2.onChange(value);
+                    handle2.onChange(value, ev);
                 }
                 else {
-                    handle1.onChange(value);
+                    handle1.onChange(value, ev);
                 }
             }
         };
     }
     render() {
-        const { size, handle1, handle2, handleSize, maxValue, minValue, startAngle, endAngle, angleType, disabled, arcColor, arcBackgroundColor, outerShadow } = this.props;
-        const trackWidth = 4;
+        const { size, handle1, handle2, handleSize, maxValue, minValue, startAngle, endAngle, angleType, disabled, arcColor, arcBackgroundColor, outerShadow, trackWidth } = this.props;
         const shadowWidth = 20;
         const trackInnerRadius = size / 2 - trackWidth - shadowWidth;
         const handle1Angle = circularGeometry_1.valueToAngle({
@@ -235,7 +234,8 @@ CircularSlider.defaultProps = {
         axis: "-y"
     },
     handleSize: 8,
-    arcBackgroundColor: "#aaa"
+    arcBackgroundColor: "#aaa",
+    trackWidth: 4
 };
 class CircularSliderWithChildren extends React.Component {
     render() {

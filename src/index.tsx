@@ -18,11 +18,25 @@ type Props = {
   handleSize: number;
   handle1: {
     value: number;
-    onChange?: (value: number, ev: React.TouchEvent<SVGSVGElement> | TouchEvent | React.MouseEvent<SVGSVGElement> | MouseEvent) => void;
+    onChange?: (
+      value: number,
+      ev:
+        | React.TouchEvent<SVGSVGElement>
+        | TouchEvent
+        | React.MouseEvent<SVGSVGElement>
+        | MouseEvent
+    ) => void;
   };
   handle2?: {
     value: number;
-    onChange: (value: number, ev: React.TouchEvent<SVGSVGElement> | TouchEvent | React.MouseEvent<SVGSVGElement> | MouseEvent) => void;
+    onChange: (
+      value: number,
+      ev:
+        | React.TouchEvent<SVGSVGElement>
+        | TouchEvent
+        | React.MouseEvent<SVGSVGElement>
+        | MouseEvent
+    ) => void;
   };
   onControlFinished?: () => void;
   disabled?: boolean;

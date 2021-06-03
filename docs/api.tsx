@@ -45,10 +45,10 @@ export const ApiDocs: React.FunctionComponent = () => {
       description: ""
     },
     {
-      name: 'trackWidth',
+      name: "trackWidth",
       require: false,
       default: 4,
-      type: 'number',
+      type: "number",
       description: ""
     },
     {

@@ -45,15 +45,17 @@ const HeadlineExample: React.FunctionComponent = () => {
     const [value2, setValue2] = useState(60);
 
     const handleSetValue1 = (
-        value: number, ev: React.TouchEvent<SVGSVGElement>
-          | TouchEvent
-          | React.MouseEvent<SVGSVGElement>
-          | MouseEvent
-      ) => {
-      ev.preventDefault()
-      ev.stopPropagation()
-      setValue1(value)
-    }
+      value: number,
+      ev:
+        | React.TouchEvent<SVGSVGElement>
+        | TouchEvent
+        | React.MouseEvent<SVGSVGElement>
+        | MouseEvent
+    ) => {
+      ev.preventDefault();
+      ev.stopPropagation();
+      setValue1(value);
+    };
 
     return (
       <CircularSlider

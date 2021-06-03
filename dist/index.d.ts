@@ -10,11 +10,11 @@ declare type Props = {
     handleSize: number;
     handle1: {
         value: number;
-        onChange?: (value: number) => void;
+        onChange?: (value: number, ev: React.TouchEvent<SVGSVGElement> | TouchEvent | React.MouseEvent<SVGSVGElement> | MouseEvent) => void;
     };
     handle2?: {
         value: number;
-        onChange: (value: number) => void;
+        onChange: (value: number, ev: React.TouchEvent<SVGSVGElement> | TouchEvent | React.MouseEvent<SVGSVGElement> | MouseEvent) => void;
     };
     onControlFinished?: () => void;
     disabled?: boolean;
@@ -22,9 +22,10 @@ declare type Props = {
     arcBackgroundColor: string;
     coerceToInt?: boolean;
     outerShadow?: boolean;
+    trackWidth: number;
 };
 export declare class CircularSlider extends React.Component<Props> {
-    static defaultProps: Pick<Props, "size" | "minValue" | "maxValue" | "startAngle" | "endAngle" | "angleType" | "arcBackgroundColor" | "handleSize">;
+    static defaultProps: Pick<Props, "size" | "minValue" | "maxValue" | "startAngle" | "endAngle" | "angleType" | "arcBackgroundColor" | "handleSize" | "trackWidth">;
     svgRef: React.RefObject<SVGSVGElement>;
     onMouseEnter: (ev: React.MouseEvent<SVGSVGElement, MouseEvent>) => void;
     onMouseDown: (ev: React.MouseEvent<SVGSVGElement, MouseEvent>) => void;
@@ -36,7 +37,7 @@ export declare class CircularSlider extends React.Component<Props> {
     render(): JSX.Element;
 }
 export declare class CircularSliderWithChildren extends React.Component<Props> {
-    static defaultProps: Pick<Props, "minValue" | "maxValue" | "startAngle" | "endAngle" | "angleType" | "size" | "arcBackgroundColor" | "handleSize">;
+    static defaultProps: Pick<Props, "minValue" | "maxValue" | "startAngle" | "endAngle" | "angleType" | "size" | "arcBackgroundColor" | "handleSize" | "trackWidth">;
     render(): JSX.Element;
 }
 export default CircularSlider;
