@@ -30,6 +30,7 @@ type Props = {
   arcBackgroundColor: string;
   coerceToInt?: boolean;
   outerShadow?: boolean;
+  trackWidth: number;
 };
 
 export class CircularSlider extends React.Component<Props> {
@@ -43,6 +44,7 @@ export class CircularSlider extends React.Component<Props> {
     | "angleType"
     | "arcBackgroundColor"
     | "handleSize"
+    | "trackWidth"
   > = {
     size: 200,
     minValue: 0,
@@ -54,7 +56,8 @@ export class CircularSlider extends React.Component<Props> {
       axis: "-y"
     },
     handleSize: 8,
-    arcBackgroundColor: "#aaa"
+    arcBackgroundColor: "#aaa",
+    trackWidth: 4
   };
   svgRef = React.createRef<SVGSVGElement>();
 
@@ -237,9 +240,9 @@ export class CircularSlider extends React.Component<Props> {
       disabled,
       arcColor,
       arcBackgroundColor,
-      outerShadow
+      outerShadow,
+      trackWidth
     } = this.props;
-    const trackWidth = 4;
     const shadowWidth = 20;
     const trackInnerRadius = size / 2 - trackWidth - shadowWidth;
     const handle1Angle = valueToAngle({

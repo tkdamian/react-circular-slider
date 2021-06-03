@@ -57,6 +57,7 @@ const HeadlineExample: React.FunctionComponent = () => {
         arcColor="#690"
         startAngle={40}
         endAngle={320}
+        trackWidth={8}
       />
     );
   };
@@ -85,6 +86,7 @@ const MyApp = () => {
       arcColor="#690"
       startAngle={40}
       endAngle={320}
+      trackWidth={8}
     />
   );
 };
